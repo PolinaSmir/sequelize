@@ -56,20 +56,36 @@ module.exports.deleteByPk = async (req, res, next) => {
   }
 };
 
+// module.exports.updateUser = async (req, res, next) => {
+//   const {
+//     params: { id },
+//     body,
+//   } = req;
+//   try {
+//     const updatedUsersArray = await User.update(body, {
+//       where: {
+//         id,
+//       },
+//       returning: true,
+//     });
+
+//     return res.status(200).send(updatedUsersArray);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 module.exports.updateUser = async (req, res, next) => {
   const {
-    params: { id },
     body,
+    params: { id },
   } = req;
   try {
-    const updatedUsersArray = await User.update(body, {
-      where: {
-        id,
-      },
-      returning: true,
-    });
+    const foundUser = await User.findByPk(id);
 
-    return res.status(200).send(updatedUsersArray);
+    const result = await foundUser.update(body);
+
+    return res.status(200).send(result);
   } catch (error) {
     next(error);
   }
