@@ -1,7 +1,7 @@
 const { Task, User } = require("../models/index");
 
 module.exports.createTask = async (req, res, next) => {
-  const { userInstance } = req;
+  const { userInstance, body } = req;
   try {
     const result = await userInstance.createTask(body);
 
