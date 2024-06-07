@@ -14,7 +14,11 @@ module.exports.createUser = async (req, res, next) => {
 
 module.exports.findAll = async (req, res, next) => {
   try {
-    const resultsArray = await User.findAll();
+    const { pagination } = req;
+
+    const resultsArray = await User.findAll({
+      ...pagination,
+    });
 
     return res.status(200).send(resultsArray);
   } catch (error) {
