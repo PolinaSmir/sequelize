@@ -28,3 +28,15 @@ module.exports.addUserToGroup = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.getUserGroups = async (req, res, next) => {
+  try {
+    const { userInstance } = req;
+
+    const groups = await userInstance.getGroups();
+
+    return res.status(200).send(groups);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,4 +1,5 @@
-const { User } = require("../models/index");
+const UserNotFound = require("../errors/UserNotFound");
+const { User, Group } = require("../models/index");
 
 module.exports.createUser = async (req, res, next) => {
   const { body } = req;
@@ -78,6 +79,60 @@ module.exports.updateUser = async (req, res, next) => {
     const result = await userInstance.update(body);
 
     return res.status(200).send(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Lazy Loading
+// module.exports.getUserWithGroups = async (req, res, next) => {
+//   try {
+//     const {
+//       params: { userId },
+//     } = req;
+
+//     const userInstance = await User.findByPk(userId);
+
+//     if (!userInstance) {
+//       throw new UserNotFound("User not found");
+//     }
+
+//     const groupsArray = await userInstance.getGroups();
+
+//     return res.status(200).send({ data: { userInstance, groupsArray } });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+// Eager loading
+module.exports.getUserWithGroups = async (req, res, next) => {
+  try {
+    const {
+      params: { userId },
+    } = req;
+
+    // const userWithGroups = await User.findByPk(userId, {
+    //   include: [Group], // LEFT JOIN
+    // });
+
+    const userWithGroups = await User.findByPk(userId, {
+      include: {
+        // INNER JOIN
+        model: Group,
+        required: true,
+        through: {
+          attributes: [], // users_to_groups
+        },
+        attributes: ["id", "name"], // groups
+      },
+    });
+
+    if (!userWithGroups) {
+      throw new UserNotFound("User not found");
+    }
+
+    return res.status(200).send(userWithGroups);
   } catch (error) {
     next(error);
   }
