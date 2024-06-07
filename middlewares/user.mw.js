@@ -7,7 +7,11 @@ module.exports.getUserInstance = async (req, res, next) => {
     params: { userId },
   } = req;
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId, {
+      attributes: {
+        exclude: ["password"],
+      },
+    });
 
     if (!user) {
       throw new UserNotFound("User not found");

@@ -117,6 +117,7 @@ module.exports.getUserWithGroups = async (req, res, next) => {
     // });
 
     const userWithGroups = await User.findByPk(userId, {
+      attributes: ["id", "first_name", "last_name"],
       include: {
         // INNER JOIN
         model: Group,
@@ -131,6 +132,9 @@ module.exports.getUserWithGroups = async (req, res, next) => {
     if (!userWithGroups) {
       throw new UserNotFound("User not found");
     }
+
+    // const userWithGroupsJSON = userWithGroups.toJSON();
+    // delete userWithGroupsJSON.password;
 
     return res.status(200).send(userWithGroups);
   } catch (error) {
