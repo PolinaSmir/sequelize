@@ -24,5 +24,6 @@ router.get("/tasks-count/:userId", getUserInstance, TaskController.getCountOfTas
 router.post("/groups", GroupController.createGroup);
 router.put("/groups/:userId/:groupId", getUserInstance, GroupController.addUserToGroup);
 router.get("/groups/:userId", getUserInstance, GroupController.getUserGroups);
+router.delete("/groups/:userId/:groupId", getUserInstance, GroupController.deleteUserFromGroup);
 
 module.exports = router;
