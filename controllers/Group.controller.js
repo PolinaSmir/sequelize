@@ -93,11 +93,22 @@ module.exports.createGroupImage = async (req, res, next) => {
   try {
     const {
       params: { groupId },
+      file: { filename },
     } = req;
 
-    console.log(req.file);
+    const [rowCount, [updatedGroup]] = await Group.update(
+      {
+        imagePath: filename,
+      },
+      {
+        where: {
+          id: groupId,
+        },
+        returning: true,
+      }
+    );
 
-    return res.status(200).send({ groupId });
+    return res.status(200).send(updatedGroup);
   } catch (error) {
     next(error);
   }
