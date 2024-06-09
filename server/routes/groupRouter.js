@@ -26,5 +26,6 @@ groupRouter.get("/:userId", getUserInstance, GroupController.getUserGroups);
 groupRouter.delete("/:userId/:groupId", getUserInstance, GroupController.deleteUserFromGroup);
 groupRouter.get("/:groupId/members", pagination, GroupController.getGroupWithMembers);
 groupRouter.post("/:groupId", upload.single("groupAvatar"), GroupController.createGroupImage);
+groupRouter.get("/", GroupController.getAllGroups);
 
 module.exports = groupRouter;
