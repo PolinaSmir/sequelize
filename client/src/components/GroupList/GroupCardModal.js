@@ -38,8 +38,8 @@ const GroupCardModal = (props) => {
               try {
                 const serverResponse = await createGroupImage(formData, selectedGroup.id);
                 console.log(serverResponse);
-                setIsModalOpen(false); //
-                await loadGroups(); //
+                setIsModalOpen(false);
+                await loadGroups();
               } catch (error) {
                 console.error(error);
               } finally {
