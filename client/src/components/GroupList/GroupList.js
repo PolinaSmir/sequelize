@@ -3,6 +3,7 @@ import { getGroups } from "../../api/index";
 import GroupCard from "./GroupCard";
 import "./style.css";
 import GroupCardModal from "./GroupCardModal";
+import AddGroupFormModal from "./AddGroupFormModal";
 
 const GroupList = () => {
   const [groups, setGroups] = useState([]);
@@ -45,11 +46,13 @@ const GroupList = () => {
   return (
     <>
       <h1>Group List</h1>
+      <button onClick={() => setIsModalAddOpen(true)}>Add group</button>
 
       {isLoading && <h2 className="loading">Loading....</h2>}
       <section className="card-container">{groups.length > 0 ? renderGroups() : <h2 className="error">Groups not found</h2>}</section>
 
       <GroupCardModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} selectedGroup={selectedGroup} />
+      <AddGroupFormModal isModalOpen={isModalAddOpen} setIsModalOpen={setIsModalAddOpen} loadGroups={loadGroups} />
     </>
   );
 };
