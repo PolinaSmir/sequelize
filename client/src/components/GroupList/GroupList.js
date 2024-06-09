@@ -51,7 +51,7 @@ const GroupList = () => {
       {isLoading && <h2 className="loading">Loading....</h2>}
       <section className="card-container">{groups.length > 0 ? renderGroups() : <h2 className="error">Groups not found</h2>}</section>
 
-      <GroupCardModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} selectedGroup={selectedGroup} />
+      <GroupCardModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} selectedGroup={selectedGroup} loadGroups={loadGroups} />
       <AddGroupFormModal isModalOpen={isModalAddOpen} setIsModalOpen={setIsModalAddOpen} loadGroups={loadGroups} />
     </>
   );
